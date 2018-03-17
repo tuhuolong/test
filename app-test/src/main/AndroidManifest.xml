@@ -1,0 +1,63 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ryeex.test">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".app.TestApplication"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name="com.ryeex.test.TestMainActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ryeex.test.TestSelectActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.ryeex.test.JRCPActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.ryeex.test.TestProductActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.ryeex.test.TestBleActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.ryeex.test.TestGSensorActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.ryeex.test.TestNfcActivity"
+            android:configChanges="keyboardHidden|keyboard|orientation"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name="com.xiaomi.account.openauth.AuthorizeActivity" />
+
+        <receiver
+            android:name=".TestReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.ryeex.test.action.TEST_API" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

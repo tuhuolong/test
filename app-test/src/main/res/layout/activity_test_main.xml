@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#efeff0">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/re_select"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/re_select" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/oauth"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="#3e85dc"
+        android:gravity="center"
+        android:text="OAuth登录"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/unselected_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/connected_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/se_debug"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:background="#3e85dc"
+            android:gravity="center"
+            android:text="调试SE"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/product_debug"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:background="#3e85dc"
+            android:gravity="center"
+            android:text="生产调试"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/ble_debug"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:background="#3e85dc"
+            android:gravity="center"
+            android:text="蓝牙测试"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/gsensor_debug"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:background="#3e85dc"
+            android:gravity="center"
+            android:text="GSensor调试"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/nfc_debug"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:background="#3e85dc"
+            android:gravity="center"
+            android:text="NFC调试"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/disconnected_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/tip_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#fef6a2"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp" />
+
+            <TextView
+                android:id="@+id/tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="设备已断开，请将设备靠近手机恢复连接"
+                android:textColor="#CC000000"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

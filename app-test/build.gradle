@@ -1,0 +1,116 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+
+
+
+    defaultConfig {
+        applicationId "com.ryeex.test"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def defaultOutputFile = output.outputFile
+            if (defaultOutputFile != null && defaultOutputFile.name.endsWith('.apk')) {
+
+                def newFileName
+                if (isTestJenkinsBuild()) {
+                    newFileName = "GrootTest_" + defaultConfig.versionCode + "_" + defaultConfig.versionName + "_" + BUILD_NUMBER + "_debug.apk"
+                } else {
+                    newFileName = "GrootTest_" + defaultConfig.versionCode + "_" + defaultConfig.versionName + "_debug.apk"
+                }
+                outputFileName = newFileName
+            }
+        }
+    }
+}
+
+ext.isTestJenkinsBuild = { ->
+    if (project.hasProperty("IS_TEST")
+            && project.hasProperty("WORKSPACE")
+            && project.hasProperty("JOB_NAME")
+            && project.hasProperty("BUILD_NUMBER")
+            && project.hasProperty("RESULT_LOCAL_DIR")
+            && project.hasProperty("RESULT_URL")) {
+        return true
+    } else {
+        return false
+    }
+}
+
+task testSaveJenkinsBuildResult << {
+    if (isTestJenkinsBuild()) {
+        println "saveBuildResult"
+
+        println("WORKSPACE:" + WORKSPACE)
+        println("JOB_NAME:" + JOB_NAME)
+        println("BUILD_NUMBER:" + BUILD_NUMBER)
+        println("RESULT_LOCAL_DIR:" + RESULT_LOCAL_DIR)
+
+        mkdir(RESULT_LOCAL_DIR + "/" + JOB_NAME + "/" + BUILD_NUMBER)
+
+        copy {
+            from WORKSPACE + "/app-test/build/outputs"
+            into RESULT_LOCAL_DIR + "/" + JOB_NAME + "/" + BUILD_NUMBER + "/outputs"
+        }
+    }
+}
+
+task testExportProperties << {
+    if (isTestJenkinsBuild()) {
+        println "exportProperties"
+
+        def envFile = new File("app-test/build/jenkins.env.properties")
+        envFile.setText("")
+
+        envFile.append("\nVERSION_CODE=" + android.defaultConfig.versionCode);
+        envFile.append("\nVERSION_NAME=" + android.defaultConfig.versionName);
+
+        String emailContent = testGenerateEmail()
+
+        envFile.append("\nEMAIL_CONTENT=" + emailContent)
+    }
+}
+
+def testGenerateEmail() {
+    String content = ""
+
+    String apkPath = RESULT_URL + "/" + JOB_NAME + "/" + BUILD_NUMBER + "/outputs/apk/debug/GrootTest_" + android.defaultConfig.versionCode + "_" + android.defaultConfig.versionName + "_" + BUILD_NUMBER + "_debug.apk";
+    content += apkPath + "<br>";
+    content += "<img src=\"https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + apkPath + "\"/><br>";
+
+    content += "<br>";
+
+    return content;
+}
+
+gradle.buildFinished {
+    testSaveJenkinsBuildResult.execute();
+
+    testExportProperties.execute();
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.1'
+    compile project(':lib-common')
+    compile project(':lib-log')
+    compile project(':lib-ble')
+    implementation files('libs/oauth.1.6.6.jar')
+    compile 'com.google.code.gson:gson:2.8.2'
+}
